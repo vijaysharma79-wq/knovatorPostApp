@@ -1,19 +1,21 @@
 const express = require("express");
-const app = express();
 const path = require("path");
 const cors = require('cors')
+const UserRoute = require('./route/UserRoute');
+const { default: mongoose } = require("mongoose");
+const userRoute = require("./route/UserRoute");
+const postRoute = require("./route/postRoutes");
+const app = express();
 
-require("dotenv").config({ path: "backend/config/config.env" });
+// require("dotenv").config({ path: "backend/config/config.env" });
 app.use(cors())
 app.use(express.json());
 
-const UserRoute = require('./route/User.Route');
-const { default: mongoose } = require("mongoose");
-const postroute = require("./route/postRoutes");
 
 
-app.use("/user", UserRoute);
-app.use("/post", postroute);
+
+app.use("/user",userRoute);
+app.use("/post", postRoute);
 
 
 const database = async () => {
@@ -27,9 +29,8 @@ const database = async () => {
 }
 database()
 
-// connectDatabase();
-const server = app.listen(8700, () => {
-  console.log(`Server is working on http://localhost:${8700}`);
+// listening server
+ app.listen(5050, () => {
+  console.log(`Server is working on port ${5050}`);
 });
 
-module.exports = app;
